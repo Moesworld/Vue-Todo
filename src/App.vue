@@ -1,11 +1,13 @@
 <template>
   <div id="app">
     <Header />
+    <AddTodo v-on:add-todo="addTodo"/>
     <Todo v-bind:todos="todos" v-on:del-todo="deleteTodo" />
   </div>
 </template>
 
 <script>
+import AddTodo from './components/AddTodo.vue'
 import Header from './components/layouts/Header.vue'
 import Todo from './components/Todo.vue'
 
@@ -13,6 +15,7 @@ export default {
   name: 'App',
   components: {
     Header,
+    AddTodo,
     Todo
   }, 
   data() {
@@ -37,6 +40,9 @@ export default {
   methods: {
     deleteTodo(id){
       this.todos = this.todos.filter(todo => todo.id !== id);
+    },
+    addTodo(newTodo){
+      this.todos = [...this.todos, newTodo]
     }
   }
 }
