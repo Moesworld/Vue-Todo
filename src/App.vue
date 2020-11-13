@@ -1,53 +1,23 @@
 <template>
   <div id="app">
     <Header />
-    <AddTodo v-on:add-todo="addTodo"/>
-    <Todo v-bind:todos="todos" v-on:del-todo="deleteTodo" />
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+    </div>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import AddTodo from './components/AddTodo.vue'
 import Header from './components/layouts/Header.vue'
-import Todo from './components/Todo.vue'
-import axios from 'axios'
-
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Header,
-    AddTodo,
-    Todo
-  }, 
-  data() {
-    return {
-      todos: [
-     
-      ]
-    }
-  },
-  methods: {
-    deleteTodo(id){
-
-      axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
-      .then(this.todos = this.todos.filter(todo => todo.id !== id))
-      .catch(err => console.log(err));
-      //this.todos = this.todos.filter(todo => todo.id !== id);
-    },
-    addTodo(newTodo){
-      const {title, completed } = newTodo;
-      axios.post('https://jsonplaceholder.typicode.com/todos', {title, completed})
-      .then(res => this.todos = [...this.todos, res.data])
-      .catch(err => console.log(err));
-     
-    }
-  }, 
-  created(){
-    axios.get('https://jsonplaceholder.typicode.com/todos?_limit=3').then(res => this.todos = res.data).catch(err => console.log(err));
+    Header
   }
 }
 </script>
-
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -55,6 +25,18 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 0px;
+}
+
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>
