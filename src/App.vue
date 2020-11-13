@@ -1,16 +1,43 @@
 <template>
   <div id="app">
-    <HelloWorld msg="Welcome to Your Test App"/>
+    <Header />
+    <Todo v-bind:todos="todos" v-on:del-todo="deleteTodo" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/layouts/Header.vue'
+import Todo from './components/Todo.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Header,
+    Todo
+  }, 
+  data() {
+    return {
+      todos: [
+        {
+          id: 1, 
+          title: "Todo One",
+          completed: false
+        },{
+          id: 2, 
+          title: "Todo two",
+          completed: false
+        },{
+          id: 3, 
+          title: "Todo Three",
+          completed: false
+        }
+      ]
+    }
+  },
+  methods: {
+    deleteTodo(id){
+      this.todos = this.todos.filter(todo => todo.id !== id);
+    }
   }
 }
 </script>
@@ -22,6 +49,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 0px;
 }
 </style>
